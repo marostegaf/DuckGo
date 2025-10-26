@@ -1,12 +1,12 @@
 import React from "react";
+import "./informacaoObtida.css";
 
 export default function InformacaoObtida({ pato, drone }) {
-  // Altura e peso convertidos se drone for dos EUA
   const alturaConvertida = drone.paisDrone === "EUA" ? pato.alturaCm * 30.48 : pato.alturaCm;
   const pesoConvertido = drone.paisDrone === "EUA" ? pato.pesoG * 0.453592 : pato.pesoG;
 
   return (
-    <div>
+    <div className="informacao-obtida">
       <h3>{pato.nome}</h3>
 
       <p>
@@ -25,7 +25,7 @@ export default function InformacaoObtida({ pato, drone }) {
 
       {pato.superPoder && (
         <>
-          <p>Superpoder: {pato.superPoder.nome}</p>
+          <p className="superpoder">Superpoder: {pato.superPoder.nome}</p>
           <p>Descrição: {pato.superPoder.descricao}</p>
           <p>Classificação: {pato.superPoder.classificacao}</p>
         </>
@@ -38,7 +38,6 @@ export default function InformacaoObtida({ pato, drone }) {
       <p>País: {pato.localizacao.pais}</p>
       <p>Latitude: {pato.localizacao.latitude.toFixed(5)}</p>
       <p>Longitude: {pato.localizacao.longitude.toFixed(5)}</p>
-      {/* Só mostra ponto de referência se não for null */}
       {pato.localizacao.pontoReferencia ? (
         <p>Ponto de referência: {pato.localizacao.pontoReferencia}</p>
       ) : (
@@ -47,14 +46,16 @@ export default function InformacaoObtida({ pato, drone }) {
 
       <hr />
       <h4>Informações do Drone</h4>
-      <p>ID: {drone.id}</p>
-      <p>Marca: {drone.marcaDrone}</p>
-      <p>Fabricante: {drone.fabricanteDrone}</p>
-      <p>País de origem: {drone.paisDrone}</p>
-      <p>
-        Precisão GPS: {Math.round(drone.precisaoCm)} cm
-        {drone.paisDrone === "EUA" && ` (${drone.precisaoOriginal.toFixed(2)} jardas)`}
-      </p>
+      <div className="drone-info">
+        <p>ID: {drone.id}</p>
+        <p>Marca: {drone.marcaDrone}</p>
+        <p>Fabricante: {drone.fabricanteDrone}</p>
+        <p>País de origem: {drone.paisDrone}</p>
+        <p>
+          Precisão GPS: {Math.round(drone.precisaoCm)} cm
+          {drone.paisDrone === "EUA" && ` (${drone.precisaoOriginal.toFixed(2)} jardas)`}
+        </p>
+      </div>
     </div>
   );
 }

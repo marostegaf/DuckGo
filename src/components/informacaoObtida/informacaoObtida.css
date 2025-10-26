@@ -1,0 +1,69 @@
+/* Container principal */
+.informacao-obtida {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fffbe6; /* Amarelo claro de fundo */
+  color: #222; /* Preto para texto */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+/* Títulos principais */
+.informacao-obtida h3 {
+  color: #ffcc00; /* Amarelo forte */
+  margin-bottom: 10px;
+  text-align: center;
+  border-bottom: 2px solid #ffcc00;
+  padding-bottom: 5px;
+}
+
+/* Subtítulos das seções */
+.informacao-obtida h4 {
+  color: #222;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  border-bottom: 1px dashed #ffcc00;
+  padding-bottom: 3px;
+}
+
+/* Parágrafos */
+.informacao-obtida p {
+  margin: 5px 0;
+}
+
+/* Destaques especiais */
+.informacao-obtida .superpoder {
+  background-color: #ffcc00;
+  color: #222;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: inline-block;
+  margin: 3px 0;
+  font-weight: bold;
+}
+
+/* Linha separadora */
+.informacao-obtida hr {
+  border: none;
+  border-top: 1px solid #ffcc00;
+  margin: 10px 0;
+}
+
+/* Drone info */
+.informacao-obtida .drone-info {
+  background-color: #222; /* Preto */
+  color: #ffcc00; /* Amarelo */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Responsividade */
+@media (max-width: 500px) {
+  .informacao-obtida {
+    max-width: 100%;
+    padding: 15px;
+  }
+}

@@ -1,0 +1,53 @@
+.painel-lateral {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+  overflow-y: auto;
+  transition: width 0.3s ease;
+  z-index: 9999;
+  padding: 0;
+  cursor: default; /* seta padrão */
+}
+
+.painel-lateral.aberto {
+  width: 350px;
+  padding: 15px;
+}
+
+/* Scroll customizado */
+.painel-lateral::-webkit-scrollbar {
+  width: 8px;
+}
+
+.painel-lateral::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0);
+}
+
+.painel-lateral::-webkit-scrollbar-thumb {
+  background-color: #ffcc00;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Botão fechar */
+.botao-fechar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  background-color: #222;
+  color: #ffcc00;
+  border: none;
+  padding: 5px 10px;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: transform 0.1s ease;
+}
+
+.botao-fechar:hover {
+  transform: scale(1.1);
+}
