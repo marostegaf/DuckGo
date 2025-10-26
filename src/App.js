@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Mapa from "./components/Mapa";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
-function App() {
+
+const dsinIcone = new L.Icon({
+  iconUrl: "/images/dsin-base.png",
+  iconRetinaUrl: "/images/dsin-base.png",
+  iconSize: [40, 40],
+  shadowUrl: null
+});
+
+const dsinPosicao = [-22.233653, -49.9341193];
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Mapa 
+      dsinPosicao={dsinPosicao} 
+      dsinIcone={dsinIcone} 
+    />
   );
 }
-
-export default App;
