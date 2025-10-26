@@ -1,8 +1,16 @@
 import { Marker, Popup } from "react-leaflet";
+import L from "leaflet";
 
-export default function Base({ posicao, icone }) {
+const dsinIcone = new L.Icon({
+  iconUrl: "/images/dsin-base.png",
+  iconRetinaUrl: "/images/dsin-base.png",
+  iconSize: [40, 40],
+  shadowUrl: null
+});
+
+export default function Base({ posicao}) {
   return (
-    <Marker position={posicao} icon={ icone }>
+    <Marker position={posicao} icon={ dsinIcone }>
       <Popup>Base de Operações (DSIN)</Popup>
     </Marker>
   );
