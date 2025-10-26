@@ -1,11 +1,25 @@
-import React from "react";
+// src/components/painelLateral/PainelLateral.js
+import React, { useRef, useImperativeHandle, forwardRef } from "react";
 import "./PainelLateral.css";
 
-export default function PainelLateral({ aberto, onFechar, children }) {
-  // Evita que o Leaflet “pegue” scroll, click ou drag
+const PainelLateral = forwardRef(({ aberto, onFechar, children }, ref) => {
+  const painelRef = useRef(null);
+
   function bloquearEventos(e) {
     e.stopPropagation();
   }
+
+  // Expõe função scrollToBottom para o componente pai
+  useImperativeHandle(ref, () => ({
+    scrollToBottom: () => {
+      if (painelRef.current) {
+        painelRef.current.scrollTo({
+          top: painelRef.current.scrollHeight,
+          behavior: "smooth",
+        });
+      }
+    },
+  }));
 
   return (
     <div
@@ -13,9 +27,16 @@ export default function PainelLateral({ aberto, onFechar, children }) {
       onMouseDown={bloquearEventos}
       onWheel={bloquearEventos}
       onMouseMove={bloquearEventos}
+      ref={painelRef}
     >
-      {aberto && <button className="botao-fechar" onClick={onFechar}>X</button>}
+      {aberto && (
+        <button className="botao-fechar" onClick={onFechar}>
+          X
+        </button>
+      )}
       {children}
     </div>
   );
-}
+});
+
+export default PainelLateral;

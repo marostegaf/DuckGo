@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./informacaoObtida.css";
+import { avaliarCaptura } from "../../utils/avaliarCaptura";
 
 export default function InformacaoObtida({ pato, drone }) {
-  const alturaConvertida = drone.paisDrone === "EUA" ? pato.alturaCm * 30.48 : pato.alturaCm;
-  const pesoConvertido = drone.paisDrone === "EUA" ? pato.pesoG * 0.453592 : pato.pesoG;
+  const [resultado, setResultado] = useState(null);
+
+  const alturaConvertida =
+    drone.paisDrone === "EUA" ? pato.alturaCm * 30.48 : pato.alturaCm;
+  const pesoConvertido =
+    drone.paisDrone === "EUA" ? pato.pesoG * 0.453592 : pato.pesoG;
+
+  useEffect(() => {
+    setResultado(null);
+  }, [pato]);
+
+  function handleAvaliar() {
+    const avaliacao = avaliarCaptura(pato);
+    setResultado(avaliacao);
+  }
 
   return (
     <div className="informacao-obtida">
@@ -20,7 +34,9 @@ export default function InformacaoObtida({ pato, drone }) {
       </p>
 
       <p>Status: {pato.status}</p>
-      {pato.batimentosCardiacos && <p>Batimentos cardíacos: {pato.batimentosCardiacos} bpm</p>}
+      {pato.batimentosCardiacos && (
+        <p>Batimentos cardíacos: {pato.batimentosCardiacos} bpm</p>
+      )}
       <p>Mutações: {pato.mutacoes}</p>
 
       {pato.superPoder && (
@@ -43,6 +59,7 @@ export default function InformacaoObtida({ pato, drone }) {
       ) : (
         <p>Ponto de referência: Nenhum</p>
       )}
+      <p>Distância até a base: {pato.localizacao.distanciaBaseKm.toFixed(2)} km</p>
 
       <hr />
       <h4>Informações do Drone</h4>
@@ -53,9 +70,28 @@ export default function InformacaoObtida({ pato, drone }) {
         <p>País de origem: {drone.paisDrone}</p>
         <p>
           Precisão GPS: {Math.round(drone.precisaoCm)} cm
-          {drone.paisDrone === "EUA" && ` (${drone.precisaoOriginal.toFixed(2)} jardas)`}
+          {drone.paisDrone === "EUA" &&
+            ` (${drone.precisaoOriginal.toFixed(2)} jardas)`}
         </p>
       </div>
+
+      <hr />
+      <button className="avaliar-btn" onClick={handleAvaliar}>
+        Avaliar Captura
+      </button>
+
+      {resultado && (
+        <div className="resultado-captura">
+          <h4>Avaliação de Captura</h4>
+          <p><strong>Pontos Totais:</strong> {resultado.pontos}</p>
+          <p><strong>Recomendação:</strong> {resultado.recomendacao}</p>
+          <div>
+            {resultado.explicacao.map((exp, i) => (
+              <p key={i}>- {exp}</p>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,8 +1,8 @@
 /* Container principal */
 .informacao-obtida {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fffbe6; /* Amarelo claro de fundo */
-  color: #222; /* Preto para texto */
+  background-color: #fffbe6; /* Amarelo claro */
+  color: #222;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -10,16 +10,16 @@
   line-height: 1.5;
 }
 
-/* Títulos principais */
+/* Título principal */
 .informacao-obtida h3 {
-  color: #ffcc00; /* Amarelo forte */
+  color: #ffcc00;
   margin-bottom: 10px;
   text-align: center;
   border-bottom: 2px solid #ffcc00;
   padding-bottom: 5px;
 }
 
-/* Subtítulos das seções */
+/* Subtítulos */
 .informacao-obtida h4 {
   color: #222;
   margin-top: 15px;
@@ -34,7 +34,7 @@
   margin: 5px 0;
 }
 
-/* Destaques especiais */
+/* Superpoder destaque */
 .informacao-obtida .superpoder {
   background-color: #ffcc00;
   color: #222;
@@ -54,10 +54,43 @@
 
 /* Drone info */
 .informacao-obtida .drone-info {
-  background-color: #222; /* Preto */
-  color: #ffcc00; /* Amarelo */
+  background-color: #222;
+  color: #ffcc00;
   padding: 10px;
   border-radius: 8px;
+}
+
+/* Avaliação de captura */
+.informacao-obtida .avaliacao-info {
+  background-color: #222;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.informacao-obtida .avaliacao-info h4 {
+  border: none;
+  color: #ffcc00;
+  margin-bottom: 8px;
+}
+
+
+/* Botão */
+.avaliar-btn {
+  background-color: #ffcc00;
+  color: #222;
+  border: none;
+  padding: 8px 14px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s ease;
+}
+
+.avaliar-btn:hover {
+  transform: scale(1.1);
 }
 
 /* Responsividade */
@@ -67,3 +100,22 @@
     padding: 15px;
   }
 }
+
+/* Avaliação de captura */
+.informacao-obtida .resultado-captura {
+  background-color: #222; /* mesmo do drone */
+  color: #ffcc00;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.informacao-obtida h4 {
+  color: #ffcc00;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  border-bottom: 1px dashed #ffcc00;
+  padding-bottom: 3px;
+}
+
