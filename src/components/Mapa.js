@@ -1,7 +1,6 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import Base from "./Base";
 import PatosGerados from "./PatosGerados";
-import L from "leaflet";
 
 export default function Mapa({ dsinPosicao }) {
   return (

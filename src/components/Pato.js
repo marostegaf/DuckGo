@@ -1,17 +1,6 @@
-import { Marker, Popup } from "react-leaflet";
-import L from "leaflet";
+import { gerarPatoAleatorio } from "../utils/gerarPatoAleatorio";
 
-const patoIcone = new L.Icon({
-  iconUrl: "/images/pato-icon.png",
-  iconRetinaUrl: "/images/pato-icon.png",
-  iconSize: [30, 30],
-  shadowUrl: null,
-});
-
-export default function Pato({ posicao }) {
-  return (
-    <Marker position={posicao} icon={patoIcone}>
-      <Popup>Pato selvagem!</Popup>
-    </Marker>
-  );
+export default function Pato({ id }) {
+  const pato = gerarPatoAleatorio(id);
+  return pato; // retorna objeto, não exibe nada
 }
