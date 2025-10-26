@@ -15,20 +15,21 @@ export function gerarDroneAleatorio(id) {
   let minPrecisao, maxPrecisao;
   if (pais === "Brasil") {
     minPrecisao = 4;       // cm
-    maxPrecisao = 3000;    // cm
+    maxPrecisao = 3000;    // 30m em cm
   } else { // EUA, informação em jardas
-    minPrecisao = 4 / 1.09361;    // jardas -> cm
-    maxPrecisao = 3000 / 1.09361; // jardas -> cm
+    minPrecisao = 4 / 0.9144;    // cm -> jardas
+    maxPrecisao = 3000 / 0.9144; // cm -> jardas
   }
 
   const precisaoOriginal = aleatorioEntre(minPrecisao, maxPrecisao);
-  const precisaoCm = pais === "EUA" ? precisaoOriginal * 1.09361 : precisaoOriginal;
+  const precisaoCm = pais === "EUA" ? precisaoOriginal * 0.9144 : precisaoOriginal;
 
   return {
     id: `DRN-${String(id).padStart(3, "0")}`,
     marcaDrone: marca,
     fabricanteDrone: fabricante,
     paisDrone: pais,
-    precisaoCm
+    precisaoOriginal, // valor na unidade do país
+    precisaoCm        // valor convertido para cm
   };
 }

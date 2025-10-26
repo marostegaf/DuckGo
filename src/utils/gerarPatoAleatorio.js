@@ -1,3 +1,5 @@
+import { obterLocalizacaoAPI } from "./obterLocalizacao";
+
 function aleatorioEntre(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -13,7 +15,7 @@ function gerarSuperPoder() {
   return poderes[Math.floor(Math.random() * poderes.length)];
 }
 
-export function gerarPatoAleatorio(id, posicao) {
+export async function gerarPatoAleatorio(id, posicao) {
   const alturaCm = aleatorioEntre(10, 1000);
   const pesoG = aleatorioEntre(100, 5000);
   const status = statusPossiveis[Math.floor(Math.random() * statusPossiveis.length)];
@@ -22,6 +24,9 @@ export function gerarPatoAleatorio(id, posicao) {
     ? aleatorioEntre(30, 150) 
     : null;
   const superPoder = status === "Desperto" ? gerarSuperPoder() : null;
+
+  // Busca cidade, estado e país via API Nominatim com retry
+  const localizacaoExtra = await obterLocalizacaoAPI(posicao[0], posicao[1]);
 
   return {
     id,
@@ -35,7 +40,10 @@ export function gerarPatoAleatorio(id, posicao) {
     localizacao: {
       latitude: posicao[0],
       longitude: posicao[1],
-      pontoReferencia: null
+      pontoReferencia: null,
+      cidade: localizacaoExtra.cidade,
+      estado: localizacaoExtra.estado,
+      pais: localizacaoExtra.pais
     }
   };
 }
