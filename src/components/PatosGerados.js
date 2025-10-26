@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { gerarPatoAleatorio } from "../utils/gerarPatoAleatorio";
@@ -13,9 +13,8 @@ const patoIcone = new L.Icon({
 });
 
 export default function PatosGerados({ basePosicao }) {
-  // Quantidade é gerada apenas uma vez
-  const [quantidade] = useState(() => Math.floor(Math.random() * 10) + 1);
   const [patos, setPatos] = useState([]);
+  const inicializado = useRef(false); // evita duplicação em StrictMode
   const raio = 0.05;
 
   // Gera posição aleatória dentro do raio
@@ -25,24 +24,40 @@ export default function PatosGerados({ basePosicao }) {
     return [basePosicao[0] + latitudeAleatoria, basePosicao[1] + longitudeAleatoria];
   }
 
+  // Gera quantidade fixa e posições fixas
+  const quantidade = useRef(Math.floor(Math.random() * 10) + 1);
+  const posicoesFixas = useRef(
+    Array.from({ length: quantidade.current }, gerarPosicaoAleatoria)
+  );
+
   useEffect(() => {
-    async function gerarPatos() {
-      console.log(`Gerando ${quantidade} patos`);
-      const posicoes = Array.from({ length: quantidade }, gerarPosicaoAleatoria);
+    if (inicializado.current) return; // roda apenas uma vez
+    inicializado.current = true;
 
-      const patosAsync = [];
-      for (let i = 0; i < posicoes.length; i++) {
-        const pato = await gerarPatoAleatorio(i + 1, posicoes[i]);
+    console.log(`Quantidade de Patos Primordiais: ${quantidade.current}`);
+
+    async function gerarPatosGradualmente() {
+      const patosTemp = [];
+
+      for (let i = 0; i < quantidade.current; i++) {
+        const pato = await gerarPatoAleatorio(i + 1, posicoesFixas.current[i]);
         const drone = gerarDroneAleatorio(i + 1);
-        patosAsync.push({ pato, drone, pos: posicoes[i] });
-      }
 
-      setPatos(patosAsync);
+        patosTemp.push({ pato, drone, pos: posicoesFixas.current[i] });
+        setPatos([...patosTemp]);
+
+        console.log(
+          `Pato ${i + 1} gerado: ${pato.nome} em lat:${posicoesFixas.current[i][0].toFixed(
+            5
+          )}, lon:${posicoesFixas.current[i][1].toFixed(5)}`
+        );
+
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
     }
 
-    gerarPatos();
-  }, [quantidade]);
-
+    gerarPatosGradualmente();
+  }, [basePosicao]);
 
   return (
     <>

@@ -25,7 +25,7 @@ export async function gerarPatoAleatorio(id, posicao) {
     : null;
   const superPoder = status === "Desperto" ? gerarSuperPoder() : null;
 
-  // Busca cidade, estado e país via API Nominatim com retry
+  // Busca cidade, estado e país via API Nominatim (uma única tentativa, rápida)
   const localizacaoExtra = await obterLocalizacaoAPI(posicao[0], posicao[1]);
 
   return {
