@@ -14,7 +14,7 @@ const patoIcone = new L.Icon({
 
 export default function PatosGerados({ basePosicao }) {
   const [patos, setPatos] = useState([]);
-  const inicializado = useRef(false); // evita duplicação em StrictMode
+  const inicializado = useRef(false);
   const raio = 0.05;
 
   // Gera posição aleatória dentro do raio
@@ -24,16 +24,19 @@ export default function PatosGerados({ basePosicao }) {
     return [basePosicao[0] + latitudeAleatoria, basePosicao[1] + longitudeAleatoria];
   }
 
-  // Gera quantidade fixa e posições fixas
-  const quantidade = useRef(Math.floor(Math.random() * 10) + 1);
+  // Quantidade total de patos a serem gerados
+  const quantidade = useRef(Math.floor(Math.random() * 50) + 1);
+
+  // Posições fixas geradas aleatoriamente
   const posicoesFixas = useRef(
     Array.from({ length: quantidade.current }, gerarPosicaoAleatoria)
   );
 
   useEffect(() => {
-    if (inicializado.current) return; // roda apenas uma vez
+    if (inicializado.current) return;
     inicializado.current = true;
 
+    // Log da quantidade total antes de começar
     console.log(`Quantidade de Patos Primordiais: ${quantidade.current}`);
 
     async function gerarPatosGradualmente() {
@@ -47,9 +50,9 @@ export default function PatosGerados({ basePosicao }) {
         setPatos([...patosTemp]);
 
         console.log(
-          `Pato ${i + 1} gerado: ${pato.nome} em lat:${posicoesFixas.current[i][0].toFixed(
+          `[${i + 1}/${quantidade.current}] Pato ${pato.nome} gerado: lat:${posicoesFixas.current[i][0].toFixed(
             5
-          )}, lon:${posicoesFixas.current[i][1].toFixed(5)}`
+          )}, lon:${posicoesFixas.current[i][1].toFixed(5)}, Ponto de referência: ${pato.localizacao.pontoReferencia || "Nenhum"}`
         );
 
         await new Promise(resolve => setTimeout(resolve, 100));

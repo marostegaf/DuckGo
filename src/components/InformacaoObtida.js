@@ -38,7 +38,12 @@ export default function InformacaoObtida({ pato, drone }) {
       <p>País: {pato.localizacao.pais}</p>
       <p>Latitude: {pato.localizacao.latitude.toFixed(5)}</p>
       <p>Longitude: {pato.localizacao.longitude.toFixed(5)}</p>
-      {pato.localizacao.pontoReferencia && <p>Ponto de referência: {pato.localizacao.pontoReferencia}</p>}
+      {/* Só mostra ponto de referência se não for null */}
+      {pato.localizacao.pontoReferencia ? (
+        <p>Ponto de referência: {pato.localizacao.pontoReferencia}</p>
+      ) : (
+        <p>Ponto de referência: Nenhum</p>
+      )}
 
       <hr />
       <h4>Informações do Drone</h4>
