@@ -7,6 +7,10 @@ const PainelLateral = forwardRef(({ aberto, onFechar, children }, ref) => {
   const [modalAberto, setModalAberto] = useState(false);
   const [mapElement, setMapElement] = useState(null);
 
+  const [missoes, setMissoes] = useState({});
+  const patoId = children?.props?.pato?.id || "sem-id";
+  const statusAtual = missoes[patoId] || "nao_iniciada";
+
   useEffect(() => {
     const mapContainer = document.querySelector(".leaflet-container");
     if (mapContainer) setMapElement(mapContainer);
@@ -29,7 +33,6 @@ const PainelLateral = forwardRef(({ aberto, onFechar, children }, ref) => {
     };
   }, []);
 
-  // Impede clique no mapa e rolagem lateral de afetar o mapa
   function bloquearEventos(e) {
     e.stopPropagation();
   }
@@ -46,6 +49,21 @@ const PainelLateral = forwardRef(({ aberto, onFechar, children }, ref) => {
     contains: (target) => painelRef.current?.contains(target),
   }));
 
+  const iniciarMissao = () => {
+    if (["ganhou", "perdeu", "abandonou"].includes(statusAtual)) {
+      alert(`Missão já concluída para este pato (${statusAtual.toUpperCase()}).`);
+      return;
+    }
+
+    setModalAberto(true);
+    setMissoes((prev) => ({ ...prev, [patoId]: "em_andamento" }));
+  };
+
+  const finalizarMissao = (resultado) => {
+    setModalAberto(false);
+    setMissoes((prev) => ({ ...prev, [patoId]: resultado }));
+  };
+
   return (
     <div
       className={`painel-lateral ${aberto ? "aberto" : ""}`}
@@ -61,11 +79,16 @@ const PainelLateral = forwardRef(({ aberto, onFechar, children }, ref) => {
 
           {children}
 
-          {/* Botão Iniciar Missão */}
+          <div className="status-missao">
+            <p>Status da Missão:</p>
+            <span className={statusAtual}>{statusAtual.replace("_", " ")}</span>
+          </div>
+
           <div className="centralizar-botao">
             <button
               className="iniciar-missao-btn"
-              onClick={() => setModalAberto(true)}
+              onClick={iniciarMissao}
+              disabled={["ganhou", "perdeu", "abandonou"].includes(statusAtual)}
             >
               Iniciar Missão
             </button>
@@ -73,12 +96,12 @@ const PainelLateral = forwardRef(({ aberto, onFechar, children }, ref) => {
         </>
       )}
 
-      {/* Modal da Missão */}
       <ModalMissao
         aberto={modalAberto}
-        onFechar={() => setModalAberto(false)}
+        onFechar={() => finalizarMissao("abandonou")}
         pato={children?.props?.pato}
         drone={children?.props?.drone}
+        onFinalizar={finalizarMissao}
       />
     </div>
   );

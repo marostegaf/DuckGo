@@ -65,11 +65,15 @@
   justify-content: center;
   margin: 25px 0;
 }
+
 .gif-batalha img {
-  width: 300px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
+
 
 .mensagem-batalha {
   text-align: center;

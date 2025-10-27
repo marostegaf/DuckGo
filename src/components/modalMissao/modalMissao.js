@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./modalMissao.css";
 
-export default function ModalMissao({ aberto, onFechar, pato, drone }) {
+export default function ModalMissao({ aberto, onFechar, pato, drone, onFinalizar }) {
   const [bateria, setBateria] = useState(100);
   const [combustivel, setCombustivel] = useState(100);
   const [integridade, setIntegridade] = useState(100);
@@ -48,7 +48,6 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
     return 0;
   }
 
-  // Reset ao abrir
   useEffect(() => {
     if (aberto && pato && drone) {
       setBateria(100);
@@ -77,15 +76,15 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
     }
   }, [aberto, pato, drone]);
 
-  // Destruição do drone
   useEffect(() => {
     if (integridade <= 0 && !missaoFinalizada) {
       setIntegridade(0);
       setMensagem("O drone foi destruído durante a missão.");
       setCapturado(false);
       setMissaoFinalizada(true);
+      onFinalizar?.("perdeu");
     }
-  }, [integridade, missaoFinalizada]);
+  }, [integridade, missaoFinalizada, onFinalizar]);
 
   if (!aberto || !pato || !drone) return null;
 
@@ -96,7 +95,6 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
     defesa: "Nenhuma defesa identificada.",
   };
 
-  // Ativar Defesa
   function ativarDefesa() {
     if (missaoFinalizada || integridade <= 0) return;
     if (defesasUsadas >= 4) {
@@ -105,7 +103,6 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
     }
 
     const novaChanceExtra = Math.min(chanceExtra + 5, 20);
-
     const consumo = Math.floor(Math.random() * 75) + 1;
 
     setBateria((b) => {
@@ -116,6 +113,7 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
         setEncerradaPorBateria(true);
         setCapturado(false);
         setMissaoFinalizada(true);
+        onFinalizar?.("perdeu");
       } else {
         setChanceExtra(novaChanceExtra);
         setDefesasUsadas(defesasUsadas + 1);
@@ -130,7 +128,6 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
     });
   }
 
-  // Tentar Capturar
   function tentarCapturar() {
     if (missaoFinalizada) return;
 
@@ -139,6 +136,7 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
       setEncerradaPorBateria(true);
       setCapturado(false);
       setMissaoFinalizada(true);
+      onFinalizar?.("perdeu");
       return;
     }
 
@@ -146,6 +144,7 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
       setMensagem("O drone foi destruído durante a missão.");
       setCapturado(false);
       setMissaoFinalizada(true);
+      onFinalizar?.("perdeu");
       return;
     }
 
@@ -154,16 +153,6 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
 
     setUltimoNumero(numeroSorteado.toFixed(1));
     setUltimaChance(chanceTotal.toFixed(1));
-
-    console.log(
-      `[DEBUG] Tentativa de captura → Chance: ${chanceTotal.toFixed(
-        1
-      )}%, Número sorteado: ${numeroSorteado.toFixed(1)}`
-    );
-
-    // Simula o "roll visual" de combustível, mas não altera valor
-    const rollVisual = Math.floor(Math.random() * 81) + 10;
-    console.log(`[DEBUG] Valor de combustível simulado (10–90): ${rollVisual}%`);
 
     const sucesso = numeroSorteado < chanceTotal;
 
@@ -175,6 +164,7 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
       );
       setCapturado(true);
       setMissaoFinalizada(true);
+      onFinalizar?.("ganhou");
       return;
     }
 
@@ -189,6 +179,7 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
       );
       setCapturado(false);
       setMissaoFinalizada(true);
+      onFinalizar?.("perdeu");
       return;
     }
 
@@ -201,10 +192,15 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
     );
   }
 
+  const handleFechar = () => {
+    if (!missaoFinalizada) onFinalizar?.("abandonou");
+    onFechar();
+  };
+
   return (
-    <div className="modal-overlay" onClick={onFechar}>
+    <div className="modal-overlay" onClick={handleFechar}>
       <div className="modal-conteudo" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-fechar" onClick={onFechar}>✕</button>
+        <button className="modal-fechar" onClick={handleFechar}>✕</button>
 
         <div className="modal-topo">
           <h2>Missão de Captura — {pato.nome}</h2>
@@ -265,7 +261,7 @@ export default function ModalMissao({ aberto, onFechar, pato, drone }) {
         </div>
 
         <div className="gif-batalha">
-          <img src="/images/batalha-drone.gif" alt="Batalha em andamento" />
+          <img src="/images/duck-missao.png" alt="Batalha em andamento" />
         </div>
 
         {mensagem && (
