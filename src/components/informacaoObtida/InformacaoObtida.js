@@ -85,7 +85,17 @@ export default function InformacaoObtida({ pato, drone }) {
           <h4>Avaliação de Captura</h4>
           <p><strong>Pontos Totais:</strong> {resultado.pontos}</p>
           <p><strong>Recomendação:</strong> {resultado.recomendacao}</p>
+
+          <hr />
+          <p>Métricas detalhadas:</p>
+          <p><strong>Custo Operacional:</strong> {resultado.custoOperacional}</p>
+          <p><strong>Risco:</strong> {resultado.risco}</p>
+          <p><strong>Valor Científico:</strong> {resultado.valorCientifico}</p>
+          <p><strong>Poderio Militar:</strong> {resultado.poderioMilitar}</p>
+
+          <hr />
           <div>
+            <p>Explicações:</p>
             {resultado.explicacao.map((exp, i) => (
               <p key={i}>- {exp}</p>
             ))}
