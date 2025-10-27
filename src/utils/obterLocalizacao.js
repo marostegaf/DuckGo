@@ -4,7 +4,7 @@ export async function obterLocalizacaoAPI(lat, lon) {
     const res = await fetch(url);
     const data = await res.json();
 
-    const address = data.address || {}; // fallback se undefined
+    const address = data.address || {};
 
     return {
       cidade: address.city || address.town || address.village || "Desconhecida",

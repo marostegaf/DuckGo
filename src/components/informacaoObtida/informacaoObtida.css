@@ -1,4 +1,3 @@
-/* Container principal */
 .informacao-obtida {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #fffbe6; /* Amarelo claro */
@@ -10,7 +9,6 @@
   line-height: 1.5;
 }
 
-/* Título principal */
 .informacao-obtida h3 {
   color: #ffcc00;
   margin-bottom: 10px;
@@ -19,7 +17,6 @@
   padding-bottom: 5px;
 }
 
-/* Subtítulos */
 .informacao-obtida h4 {
   color: #222;
   margin-top: 15px;
@@ -29,12 +26,10 @@
   padding-bottom: 3px;
 }
 
-/* Parágrafos */
 .informacao-obtida p {
   margin: 5px 0;
 }
 
-/* Superpoder destaque */
 .informacao-obtida .superpoder {
   background-color: #ffcc00;
   color: #222;
@@ -45,14 +40,12 @@
   font-weight: bold;
 }
 
-/* Linha separadora */
 .informacao-obtida hr {
   border: none;
   border-top: 1px solid #ffcc00;
   margin: 10px 0;
 }
 
-/* Drone info */
 .informacao-obtida .drone-info {
   background-color: #222;
   color: #ffcc00;
@@ -60,7 +53,6 @@
   border-radius: 8px;
 }
 
-/* Avaliação de captura */
 .informacao-obtida .avaliacao-info {
   background-color: #222;
   color: #ffffff;
@@ -75,8 +67,6 @@
   margin-bottom: 8px;
 }
 
-
-/* Botão */
 .avaliar-btn {
   background-color: #ffcc00;
   color: #222;
@@ -93,7 +83,6 @@
   transform: scale(1.1);
 }
 
-/* Responsividade */
 @media (max-width: 500px) {
   .informacao-obtida {
     max-width: 100%;
@@ -101,9 +90,8 @@
   }
 }
 
-/* Avaliação de captura */
 .informacao-obtida .resultado-captura {
-  background-color: #222; /* mesmo do drone */
+  background-color: #222;
   color: #ffcc00;
   padding: 10px;
   border-radius: 8px;

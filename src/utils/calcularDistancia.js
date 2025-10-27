@@ -1,5 +1,5 @@
 export function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
-  const R = 6371; // Raio da Terra em km
+  const R = 6371;
   const toRad = (deg) => (deg * Math.PI) / 180;
 
   const dLat = toRad(lat2 - lat1);
@@ -10,5 +10,5 @@ export function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
     Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c; // distância em km
+  return R * c;
 }

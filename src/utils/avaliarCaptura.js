@@ -1,10 +1,8 @@
-// src/utils/avaliarCaptura.js
 import { poderes } from "./poderes";
 
 export function avaliarCaptura(pato) {
   let pontos = 0;
 
-  // Métricas separadas
   let custoOperacional = 0;
   let risco = 0;
   let valorCientifico = 0;
@@ -12,7 +10,6 @@ export function avaliarCaptura(pato) {
 
   const explicacao = [];
 
-  // --- MUTAÇÕES (Valor científico) ---
   if (pato.mutacoes <= 2) {
     valorCientifico += 1;
     explicacao.push(`Mutações baixas (${pato.mutacoes}) → +1 ponto científico.`);
@@ -24,7 +21,6 @@ export function avaliarCaptura(pato) {
     explicacao.push(`Mutações altas (${pato.mutacoes}) → +3 pontos científicos.`);
   }
 
-  // --- PESO (Custo operacional) ---
   if (pato.pesoG <= 2000) {
     custoOperacional += 3;
     explicacao.push(`Peso baixo (${pato.pesoG} g) → +3 pontos de custo operacional.`);
@@ -36,7 +32,6 @@ export function avaliarCaptura(pato) {
     explicacao.push(`Peso alto (${pato.pesoG} g) → +1 ponto de custo operacional.`);
   }
 
-  // --- DISTÂNCIA (Custo operacional) ---
   const distanciaKm = pato.localizacao?.distanciaBaseKm || 0;
   if (distanciaKm <= 5000) {
     custoOperacional += 3;
@@ -46,24 +41,22 @@ export function avaliarCaptura(pato) {
     explicacao.push(`Distância longa (${distanciaKm.toFixed(2)} km) → +1 ponto de custo operacional.`);
   }
 
-  // --- STATUS E BATIMENTOS (Risco) ---
   if (pato.status === "Hibernação profunda") {
-    risco = 3; // captura fácil
+    risco = 3;
     explicacao.push("Pato em hibernação profunda → risco baixo (+3 pontos).");
   } else if (pato.status === "Em transe") {
     if (pato.batimentosCardiacos <= 70) {
-      risco = 2; // risco médio
+      risco = 2;
       explicacao.push(`Pato em transe com batimentos baixos (${pato.batimentosCardiacos} bpm) → risco médio (+2 pontos).`);
     } else {
-      risco = 1; // risco alto
+      risco = 1;
       explicacao.push(`Pato em transe com batimentos altos (${pato.batimentosCardiacos} bpm) → risco alto (+1 ponto).`);
     }
   } else if (pato.status === "Desperto") {
-    risco = 0; // risco muito alto
+    risco = 0;
     explicacao.push("Pato desperto → risco muito alto (+0 pontos).");
   }
 
-  // --- SUPERPODER (Poderio militar / ajuste de risco) ---
   if (pato.superPoder) {
     const poder = poderes.find(p => p.nome === pato.superPoder.nome);
     if (poder) {
@@ -91,21 +84,17 @@ export function avaliarCaptura(pato) {
     }
   }
 
-  // --- Pontuação total ---
   pontos = custoOperacional + valorCientifico + risco + poderioMilitar;
 
-  // --- Recomendação final baseada em risco e pontos ---
   let recomendacao = "";
 
   if ((pato.status === "Hibernação profunda") || (pato.status === "Em transe" && pato.batimentosCardiacos <= 70)) {
-    // fácil de capturar se peso e distância não forem extremos
     if (pontos >= 7) {
       recomendacao = "CAPTURAR: SIM";
     } else {
       recomendacao = "CAPTURAR: COM CAUTELA";
     }
   } else {
-    // pato desperto ou transe com batimentos altos
     if (poderioMilitar >= 0 && pontos >= 10) {
       recomendacao = "CAPTURAR: COM CAUTELA";
     } else {

@@ -11,14 +11,13 @@ export function gerarDroneAleatorio(id) {
   const fabricante = fabricantes[Math.floor(Math.random() * fabricantes.length)];
   const pais = paisesDrones[Math.floor(Math.random() * paisesDrones.length)];
 
-  // Precisão de 4 cm a 30 m
   let minPrecisao, maxPrecisao;
   if (pais === "Brasil") {
-    minPrecisao = 4;       // cm
-    maxPrecisao = 3000;    // 30m em cm
-  } else { // EUA, informação em jardas
-    minPrecisao = 4 / 0.9144;    // cm -> jardas
-    maxPrecisao = 3000 / 0.9144; // cm -> jardas
+    minPrecisao = 4;     
+    maxPrecisao = 3000; 
+  } else { 
+    minPrecisao = 4 / 0.9144; 
+    maxPrecisao = 3000 / 0.9144;
   }
 
   const precisaoOriginal = aleatorioEntre(minPrecisao, maxPrecisao);
@@ -29,7 +28,7 @@ export function gerarDroneAleatorio(id) {
     marcaDrone: marca,
     fabricanteDrone: fabricante,
     paisDrone: pais,
-    precisaoOriginal, // valor na unidade do país
-    precisaoCm        // valor convertido para cm
+    precisaoOriginal,
+    precisaoCm
   };
 }

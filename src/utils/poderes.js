@@ -1,7 +1,4 @@
-// utils/poderes.js
-
 export const poderes = [
-  // ---------------------- Bélico ----------------------
   {
     nome: "Tempestade Elétrica",
     descricao: "Gera descargas elétricas em área",
@@ -62,8 +59,6 @@ export const poderes = [
     classificacao: "Bélico",
     defesa: "Traje Condutor: canaliza energia e evita paralisia"
   },
-  
-  // ---------------------- Raro ----------------------
   {
     nome: "Olhos Laser",
     descricao: "Dispara lasers pelos olhos",
@@ -124,8 +119,6 @@ export const poderes = [
     classificacao: "Raro",
     defesa: "Blindagem Radiológica: bloqueia visão de raio-X"
   },
-  
-  // ---------------------- Alto risco ----------------------
   {
     nome: "Manipulação da Água",
     descricao: "Controla corpos d'água próximos",
@@ -180,8 +173,6 @@ export const poderes = [
     classificacao: "Alto risco",
     defesa: "Escudo Ignífugo Avançado: resiste a chamas negras"
   },
-  
-  // ---------------------- Lendário ----------------------
   {
     nome: "Teletransporte",
     descricao: "Se move instantaneamente para outro ponto",

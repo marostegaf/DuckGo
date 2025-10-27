@@ -37,13 +37,10 @@ export async function gerarPatoAleatorio(id, posicao, basePosicao) {
     : null;
   const superPoder = status === "Desperto" ? gerarSuperPoder() : null;
 
-  // Busca cidade, estado e país via API
   const localizacaoExtra = await obterLocalizacaoAPI(posicao[0], posicao[1]);
 
-  // Verifica ponto de referência
   const pontoReferencia = verificarPontoReferencia(posicao[0], posicao[1]);
 
-  // Calcula distância até a base
   const distanciaBaseKm = basePosicao
     ? calcularDistanciaKm(posicao[0], posicao[1], basePosicao[0], basePosicao[1])
     : 0;
