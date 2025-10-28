@@ -19,7 +19,7 @@ export default function PatosGerados({ basePosicao }) {
   const [idsConcluidos, setIdsConcluidos] = useState([]); // IDs em memória
   const inicializado = useRef(false);
   const painelRef = useRef(null);
-  const raio = 8;
+  const raio = 23;
 
   function gerarPosicaoAleatoria() {
     const latitudeAleatoria = (Math.random() * 2 - 1) * raio;
@@ -27,7 +27,7 @@ export default function PatosGerados({ basePosicao }) {
     return [basePosicao[0] + latitudeAleatoria, basePosicao[1] + longitudeAleatoria];
   }
 
-  const quantidade = useRef(Math.floor(Math.random() * 50) + 1);
+  const quantidade = useRef(Math.floor(Math.random() * 75) + 1);
   const posicoesFixas = useRef(
     Array.from({ length: quantidade.current }, gerarPosicaoAleatoria)
   );
